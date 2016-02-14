@@ -33,20 +33,36 @@ function drawPlayerArrow() {
 
 function drawPlayer(scene, model) {
 	var player = {
-		direction: Direction.South,
+		direction: [ Direction.South, Direction.East, Direction.North, Direction.West ],
 		gridx: 0,
 		gridy: 0,
+		rotateLeft: function() {
+			var dir = this.direction.shift();
+			this.direction.push(dir);
+			this.mesh.rotateY(Math.PI/2);
+		},
+		rotateRight: function() {
+			var dir = this.direction.pop();
+			this.direction.unshift(dir);
+			this.mesh.rotateY(-(Math.PI/2));
+		},
+		rotateBack: function() {
+			this.rotateRight();
+			this.rotateRight();
+		}
 	};
 	var arrow = drawPlayerArrow();
 	var container = new THREE.Group();
 	player.mesh = model; 
+	player.mesh.name = 'traveler';
 	player.mesh.add(container);
 	container.add(arrow);
 	var material  = new THREE.MeshNormalMaterial()
-	model.scale.set(20,20,20);
+	model.scale.set(100,100,100);
 	container.scale.divideScalar(20);
 //	player.mesh.scale.set(20,20,20);
-	arrow.position.set(-20, 0, -30);
+	arrow.scale.set(1,1,1);
+	arrow.position.set(-5, 0, -5);
 	player.mesh.position.y = 10;
 	return player;
 }
