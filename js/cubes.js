@@ -2,6 +2,7 @@ function drawCubes(scene, world, data) {
 	var material = new THREE.MeshLambertMaterial( { color: world.cubeColor, overdraw: 0.5 } );
 
 	var group = new THREE.Group();
+	group.name = 'terrain';
 
 	for(var i = 0;  i < data.length; i++) {
 		var row = data[i];
